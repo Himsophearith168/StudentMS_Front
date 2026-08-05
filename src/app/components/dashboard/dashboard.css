@@ -1,0 +1,15 @@
+.dashboard-page {
+  min-height: 100%;
+}
+.card {
+  border-radius: 1.2rem;
+}
+.list-group-item {
+  background: #ffffff;
+}
+.list-group-item + .list-group-item {
+  margin-top: 0.65rem;
+}
+.badge.bg-soft {
+  background: rgba(13, 110, 253, 0.1);
+}

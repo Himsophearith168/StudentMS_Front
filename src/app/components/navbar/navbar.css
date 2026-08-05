@@ -1,0 +1,41 @@
+.navbar {
+  min-height: 72px;
+  background: #0f172a;
+  box-shadow: none;
+}
+.navbar-brand {
+  font-weight: 800;
+  color: #ffffff;
+}
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: #cbd5e1;
+}
+.search-input {
+  max-width: 360px;
+}
+.search-input .form-control {
+  min-width: 260px;
+}
+.form-control,
+.input-group-text {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e2e8f0;
+  border: none;
+}
+.form-control::placeholder {
+  color: rgba(226, 232, 240, 0.7);
+}
+.form-control:focus {
+  box-shadow: none;
+}
+.btn-outline-secondary {
+  color: #e2e8f0;
+  /* border-color: rgba(226, 232, 240, 0.15); */
+}
+.btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+.btn-soft {
+  border-radius: 999px;
+}
