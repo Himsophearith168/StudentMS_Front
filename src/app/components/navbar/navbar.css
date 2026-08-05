@@ -1,6 +1,6 @@
 .navbar {
   min-height: 72px;
-  background: #0f172a;
+  background: hsl(222, 47%, 11%);
   box-shadow: none;
 }
 .navbar-brand {

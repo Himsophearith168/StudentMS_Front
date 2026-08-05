@@ -26,7 +26,7 @@ export class Dashboard implements OnInit {
     { title: 'Students', value: '0', badgeText: '+0%', badgeType: 'primary', description: 'Total students currently registered.' },
     { title: 'Classes', value: '0', badgeText: 'Stable', badgeType: 'success', description: 'Total classes available this term.' },
     { title: 'Subjects', value: '24', badgeText: 'Updated', badgeType: 'warning', description: 'Available courses this semester.' },
-    { title: 'Ask Permission', value: '98%', badgeText: '+2.4%', badgeType: 'info', description: 'Average attendance today.' },
+    { title: 'Ask Permission', value: '98%', badgeText: '+2.4%', badgeType: 'info', description: 'Average permission requests today.' },
   ];
 
   constructor(
