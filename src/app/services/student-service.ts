@@ -1,13 +1,41 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
+export interface StudentClass {
+  id?: number | string;
+  className?: string;
+  academicYear?: string;
+  semester?: string;
+  description?: string;
+  maxStudents?: number;
+  createdAt?: string;
+  [key: string]: any;
+}
+
+export interface StudentSubject {
+  id?: number | string;
+  subjectName?: string;
+  subjectDescription?: string;
+  semester?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  [key: string]: any;
+}
+
 export interface Student {
   id?: number | string;
-  name: string;
+  studentCode: string;
+  username?: string;
+  fullName?: string;
+  gender?: string;
+  dob?: string | Date;
+  phone?: string | number;
   email?: string;
-  major?: string;
-  grade?: string;
+  address?: string;
   status?: string;
+  className?: StudentClass;
+  subjects?: StudentSubject[];
+  createdAt?: string;
   [key: string]: any;
 }
 
