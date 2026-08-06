@@ -1,1 +1,14 @@
+<div class="d-flex align-items-center justify-content-between mb-3">
+	<h3>Students</h3>
+	<button class="btn btn-primary" (click)="onOpenAdd()">Add Student</button>
+</div>
+
+<!-- Example list placeholder -->
 <p>student works!</p>
+
+<app-add-data-modal
+	[entity]="'Student'"
+	[visible]="showAdd"
+	(close)="onCloseAdd()"
+	(save)="onSaveItem($event)">
+</app-add-data-modal>

@@ -1,0 +1,157 @@
+/* --- Backdrop --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 17, 32, 0.6); /* Matches deep dark background */
+  backdrop-filter: blur(4px); /* Modern glass effect */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  
+  /* Animation initial state */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.active {
+  opacity: 1;
+}
+
+/* --- Dialog Card --- */
+.modal-dialog {
+  width: 480px;
+  max-width: 90vw;
+  background: #ffffff;
+  border-radius: 1.5rem; /* Softer, larger radius */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  
+  /* Animation initial state */
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.modal-dialog.active {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+/* --- Header --- */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9; /* Very subtle border */
+}
+
+.modal-icon-wrapper {
+  width: 40px;
+  height: 40px;
+  background: rgba(13, 115, 119, 0.1);
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0D7377; /* Brand Teal */
+  font-size: 1.1rem;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: #1a1a1a;
+  font-size: 1.15rem;
+}
+
+.btn-close-custom {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+.btn-close-custom:hover {
+  background: #fee2e2; /* Light red bg on hover */
+  color: #dc2626; /* Red icon */
+  border-color: transparent;
+}
+
+/* --- Body --- */
+.modal-body { 
+  padding: 1.25rem 1.5rem; 
+}
+
+.form-label {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.custom-input {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 0.85rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+.custom-input:focus {
+  border-color: #0D7377; /* Teal focus ring */
+  box-shadow: 0 0 0 3px rgba(13, 115, 119, 0.15); /* Teal glow */
+  outline: none;
+}
+.custom-input::placeholder {
+  color: #94a3b8;
+}
+
+/* --- Footer --- */
+.modal-footer { 
+  padding: 1rem 1.5rem 1.5rem 1.5rem; 
+  display: flex; 
+  gap: 0.75rem; 
+  justify-content: flex-end; 
+  border-top: 1px solid #f1f5f9; 
+}
+
+.btn-cancel {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #475569;
+  border-radius: 0.85rem;
+  padding: 0.65rem 1.25rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+.btn-cancel:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #1e293b;
+}
+
+.btn-save {
+  background: #0D7377; /* Brand Teal */
+  border: none;
+  color: #ffffff;
+  border-radius: 0.85rem;
+  padding: 0.65rem 1.5rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(13, 115, 119, 0.3);
+  transition: all 0.2s ease;
+}
+.btn-save:hover:not(:disabled) {
+  background: #064E52;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(13, 115, 119, 0.4);
+  color: #ffffff;
+}
+.btn-save:disabled {
+  background: #94a3b8;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}

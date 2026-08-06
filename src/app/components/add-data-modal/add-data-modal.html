@@ -1,0 +1,38 @@
+<!-- Backdrop with fade animation class -->
+<div class="modal-overlay" [class.active]="visible" *ngIf="visible" (click)="onBackdropClick($event)">
+  
+  <!-- Dialog with scale animation class -->
+  <div class="modal-dialog" [class.active]="visible">
+    
+    <div class="modal-header">
+      <div class="d-flex align-items-center gap-3">
+        <div class="modal-icon-wrapper">
+          <i class="bi bi-plus-lg"></i>
+        </div>
+        <h5 class="modal-title mb-0">Add New {{ entity }}</h5>
+      </div>
+      <button type="button" class="btn-close-custom" aria-label="Close" (click)="onClose()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="mb-4">
+        <label class="form-label fw-semibold text-dark">Name <span class="text-danger">*</span></label>
+        <input class="form-control custom-input" [(ngModel)]="form.name" placeholder="Enter name" />
+      </div>
+
+      <div class="mb-2">
+        <label class="form-label fw-semibold text-dark">Code</label>
+        <input class="form-control custom-input" [(ngModel)]="form.code" placeholder="Optional code" />
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-cancel" (click)="onClose()">Cancel</button>
+      <button class="btn btn-save" (click)="onSave()" [disabled]="!form.name">
+        <i class="bi bi-check-lg me-1"></i> Save {{ entity }}
+      </button>
+    </div>
+  </div>
+</div>
