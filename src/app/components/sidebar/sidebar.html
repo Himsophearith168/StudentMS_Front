@@ -1,36 +1,64 @@
-<div class="sidebar-menu p-4">
+<div class="sidebar-menu p-4 d-flex flex-column h-100">
 
+  <!-- Main Navigation -->
   <div class="sidebar-section mb-4">
-    <div class="sidebar-heading text-uppercase text-muted small mb-3">Menu</div>
+    <div class="sidebar-heading text-uppercase small mb-3">Main Menu</div>
     <ul class="nav flex-column gap-1">
       <li class="nav-item">
-        <a class="nav-link sidebar-link active" routerLink="/dashboard">Dashboard</a>
+        <a class="nav-link sidebar-link" routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+          <i class="bi bi-grid-1x2-fill link-icon"></i>
+          <span>Dashboard</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link sidebar-link" href="#">Students</a>
+        <a class="nav-link sidebar-link" routerLink="/student" routerLinkActive="active">
+          <i class="bi bi-people-fill link-icon"></i>
+          <span>Students</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link sidebar-link" href="#">Score</a>
+        <a class="nav-link sidebar-link" routerLink="/score" routerLinkActive="active">
+          <i class="bi bi-journal-check link-icon"></i>
+          <span>Score</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link sidebar-link" href="#">Classes</a>
+        <a class="nav-link sidebar-link" routerLink="/classes" routerLinkActive="active">
+          <i class="bi bi-building link-icon"></i>
+          <span>Classes</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link sidebar-link" href="#">Attendance</a>
+        <a class="nav-link sidebar-link" routerLink="/attendance" routerLinkActive="active">
+          <i class="bi bi-calendar2-check link-icon"></i>
+          <span>Attendance</span>
+        </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link sidebar-link" href="#">Permissions</a>
+        <a class="nav-link sidebar-link" routerLink="/permissions" routerLinkActive="active">
+          <i class="bi bi-shield-check link-icon"></i>
+          <span>Permissions</span>
+        </a>
       </li>
     </ul>
   </div>
 
-  <div class="sidebar-section">
-    <div class="sidebar-heading text-uppercase text-muted small mb-3">Reports</div>
-    <div class="d-grid gap-2">
-      <button class="btn btn-outline-light btn-soft">Monthly</button>
-      <button class="btn btn-outline-light btn-soft">Annual</button>
-      <button class="btn btn-outline-danger btn-soft">Log out</button>
+  <!-- Spacer to push bottom section down -->
+  <div class="flex-grow-1"></div>
 
+  <!-- Bottom Section: Reports & Actions -->
+  <div class="sidebar-section mt-4">
+    <div class="sidebar-heading text-uppercase small mb-3">Reports</div>
+    <div class="d-grid gap-2">
+      <button class="btn btn-report-btn">
+        <i class="bi bi-calendar-month me-2"></i>Monthly Report
+      </button>
+      
+      <div class="sidebar-divider my-3"></div>
+
+      <button class="btn btn-logout-btn">
+        <i class="bi bi-box-arrow-left me-2"></i>Log out
+      </button>
     </div>
   </div>
 </div>

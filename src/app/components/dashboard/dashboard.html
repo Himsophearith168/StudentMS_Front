@@ -1,116 +1,178 @@
-<div class="container-fluid dashboard-page py-4">
-  <div class="row g-4">
-    <div class="col-12">
-      <div class="card p-4 bg-soft shadow-sm">
-        <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
-          <div>
-            <h2 class="mb-2">Welcome back, Admin</h2>
-            <p class="text-muted mb-0">Your modern school dashboard is ready. Monitor student progress, attendance, and teacher activity from one place.</p>
-          </div>
-          <div class="d-flex flex-wrap gap-2">
-            <button class="btn btn-primary btn-soft px-4">Add Student</button>
-            <button class="btn btn-outline-secondary btn-soft px-4">View Reports</button>
+<div class="container-fluid dashboard-page py-4 px-lg-5 position-relative">
+  
+  <!-- Ambient Background Elements -->
+  <div class="ambient-blob blob-1"></div>
+  <div class="ambient-blob blob-2"></div>
+
+  <div class="row g-4 position-relative z-1">
+    
+    <!-- Header Section -->
+    <div class="col-12 fade-in-up">
+      <div class="card card-welcome border-0 shadow-sm">
+        <div class="card-body p-4 p-lg-5">
+          <div class="d-flex flex-column flex-lg-row align-items-start align-items-lg-center justify-content-between gap-3">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-2">
+                <h2 class="mb-0 fw-bold">Welcome back, Admin</h2>
+                <span class="badge badge-term rounded-pill px-3 py-2">2024-2025</span>
+              </div>
+              <p class="text-secondary mb-0">Your modern school dashboard is ready. Monitor student progress, attendance, and teacher activity from one place.</p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-outline-danger px-4 py-2">
+                <i class="bi bi-plus-lg me-2"></i>Add Student
+              </button>
+              <button class="btn btn-outline-custom px-4 py-2">
+                <i class="bi bi-bar-chart-line me-2"></i>View Reports
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <ng-container *ngFor="let stat of stats">
-      <app-stat-card
-        [title]="stat.title"
-        [value]="stat.value"
-        [badgeText]="stat.badgeText"
-        [badgeType]="stat.badgeType"
-        [description]="stat.description"
-      ></app-stat-card>
+    <!-- Stat Cards (Using your existing component) -->
+    <ng-container *ngFor="let stat of stats; let i = index">
+      <div class="col-12 col-sm-6 col-xl-3 fade-in-up" [style.animation-delay]="(i + 1) * 0.1 + 's'">
+        <app-stat-card
+          [title]="stat.title"
+          [value]="stat.value"
+          [badgeText]="stat.badgeText"
+          [badgeType]="stat.badgeType"
+          [description]="stat.description"
+        ></app-stat-card>
+      </div>
     </ng-container>
 
-    <div class="col-12 col-xl-7">
-      <div class="card p-4 h-100 shadow-sm">
-        <div class="d-flex justify-content-between align-items-start mb-4">
-          <div>
-            <h5 class="mb-1">School performance</h5>
-            <p class="text-muted mb-0">Track engagement and activity across the school.</p>
-          </div>
-          <button class="btn btn-outline-secondary btn-soft">Export</button>
-        </div>
-        <div class="row g-3">
-          <div class="col-6">
-            <div class="p-3 rounded-4 bg-light">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted">Attendance</span>
-                <strong>98%</strong>
-              </div>
-              <div class="progress rounded-pill">
-                <div class="progress-bar bg-primary" role="progressbar" style="width: 98%;"></div>
-              </div>
+    <!-- School Performance Section -->
+    <div class="col-12 col-xl-7 fade-in-up" style="animation-delay: 0.5s">
+      <div class="card border-0 h-100 shadow-sm card-custom-radius">
+        <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <h5 class="fw-bold mb-1">School performance</h5>
+              <p class="text-muted small mb-0">Track engagement and activity across the school.</p>
             </div>
+            <button class="btn btn-sm btn-outline-custom">Export</button>
           </div>
-          <div class="col-6">
-            <div class="p-3 rounded-4 bg-light">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted">Satisfaction</span>
-                <strong>89%</strong>
-              </div>
-              <div class="progress rounded-pill">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 89%;"></div>
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <div class="rounded-4 p-4 text-white" style="background: linear-gradient(135deg, #0d6efd 0%, #20c997 100%);">
-              <div class="d-flex justify-content-between align-items-start mb-3">
-                <div>
-                  <h6 class="text-white-75 mb-2">Classroom engagement</h6>
-                  <h3 class="fw-bold mb-0">Live insights</h3>
+          
+          <div class="row g-4">
+            <!-- Attendance Metric -->
+            <div class="col-sm-6">
+              <div class="metric-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="metric-dot bg-teal"></div>
+                    <span class="fw-medium text-dark">Attendance</span>
+                  </div>
+                  <strong class="fs-5">98%</strong>
                 </div>
-                <span class="badge bg-white text-primary rounded-pill py-2 px-3">+6.7%</span>
+                <div class="progress progress-thin rounded-pill mb-2">
+                  <div class="progress-bar bg-teal" role="progressbar" style="width: 98%;"></div>
+                </div>
+                <div class="text-muted small">Target: 95% <span class="text-success fw-medium">(+3%)</span></div>
               </div>
-              <p class="mb-0 opacity-75">Strong participation increase across lessons and teacher interactions this week.</p>
+            </div>
+
+            <!-- Satisfaction Metric -->
+            <div class="col-sm-6">
+              <div class="metric-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <div class="d-flex align-items-center gap-2">
+                    <div class="metric-dot bg-emerald"></div>
+                    <span class="fw-medium text-dark">Satisfaction</span>
+                  </div>
+                  <strong class="fs-5">89%</strong>
+                </div>
+                <div class="progress progress-thin rounded-pill mb-2">
+                  <div class="progress-bar bg-emerald" role="progressbar" style="width: 89%;"></div>
+                </div>
+                <div class="text-muted small">Based on 1,200 surveys</div>
+              </div>
+            </div>
+
+            <!-- Engagement Highlight -->
+            <div class="col-12">
+              <div class="card-engage rounded-4 p-4 p-md-5 text-white position-relative overflow-hidden">
+                <div class="engage-pattern"></div>
+                <div class="position-relative z-1">
+                  <div class="d-flex justify-content-between align-items-start mb-3 flex-wrap gap-2">
+                    <div>
+                      <span class="badge bg-white bg-opacity-25 text-white border-0 rounded-pill px-3 py-2 mb-3">Live Metrics</span>
+                      <h3 class="fw-bold mb-0">Classroom engagement</h3>
+                    </div>
+                    <span class="badge bg-white text-dark rounded-pill py-2 px-3 fw-bold shadow-sm fs-6">+6.7%</span>
+                  </div>
+                  <p class="mb-0 opacity-75">Strong participation increase across lessons and teacher interactions this week.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-xl-5">
-      <div class="card p-4 h-100 shadow-sm">
-        <div class="d-flex justify-content-between align-items-start mb-4">
-          <div>
-            <h5 class="mb-1">Latest updates</h5>
-            <p class="text-muted mb-0">Recent notifications and actions to review.</p>
+    <!-- Latest Updates Section -->
+    <div class="col-12 col-xl-5 fade-in-up" style="animation-delay: 0.6s">
+      <div class="card border-0 h-100 shadow-sm card-custom-radius">
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <div>
+              <h5 class="fw-bold mb-1">Latest updates</h5>
+              <p class="text-muted small mb-0">Recent notifications and actions to review.</p>
+            </div>
+            <a href="javascript:void(0)" class="fw-semibold small text-teal text-decoration-none">View All</a>
           </div>
+          
+          <ul class="list-group list-group-flush flex-grow-1">
+            <li class="list-group-item border-0 rounded-4 mb-3 bg-body-soft px-4 py-3 update-item">
+              <div class="d-flex align-items-start gap-3">
+                <div class="update-icon bg-teal-soft text-teal rounded-circle flex-shrink-0">
+                  <i class="bi bi-person-plus-fill"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <strong class="text-dark">New student enrollment</strong>
+                    <span class="badge bg-teal rounded-pill px-3 py-2 flex-shrink-0 ms-2">Now</span>
+                  </div>
+                  <div class="text-muted small mt-1">5 students registered today.</div>
+                </div>
+              </div>
+            </li>
+            
+            <li class="list-group-item border-0 rounded-4 mb-3 bg-body-soft px-4 py-3 update-item">
+              <div class="d-flex align-items-start gap-3">
+                <div class="update-icon bg-emerald-soft text-emerald rounded-circle flex-shrink-0">
+                  <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <strong class="text-dark">Attendance summary</strong>
+                    <span class="badge bg-emerald rounded-pill px-3 py-2 flex-shrink-0 ms-2">Good</span>
+                  </div>
+                  <div class="text-muted small mt-1">Daily attendance above 95%.</div>
+                </div>
+              </div>
+            </li>
+            
+            <li class="list-group-item border-0 rounded-4 bg-body-soft px-4 py-3 update-item">
+              <div class="d-flex align-items-start gap-3">
+                <div class="update-icon bg-amber-soft text-amber rounded-circle flex-shrink-0">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <strong class="text-dark">Schedule update</strong>
+                    <span class="badge bg-amber text-dark rounded-pill px-3 py-2 flex-shrink-0 ms-2">Update</span>
+                  </div>
+                  <div class="text-muted small mt-1">New teacher timetable published.</div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item rounded-4 mb-3 shadow-sm border-0">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <strong>New student enrollment</strong>
-                <div class="text-muted small">5 students registered today.</div>
-              </div>
-              <span class="badge bg-primary rounded-pill py-2 px-3">Now</span>
-            </div>
-          </li>
-          <li class="list-group-item rounded-4 mb-3 shadow-sm border-0">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <strong>Attendance summary</strong>
-                <div class="text-muted small">Daily attendance above 95%.</div>
-              </div>
-              <span class="badge bg-success rounded-pill py-2 px-3">Good</span>
-            </div>
-          </li>
-          <li class="list-group-item rounded-4 shadow-sm border-0">
-            <div class="d-flex justify-content-between align-items-start">
-              <div>
-                <strong>Schedule update</strong>
-                <div class="text-muted small">New teacher timetable published.</div>
-              </div>
-              <span class="badge bg-warning rounded-pill py-2 px-3">Update</span>
-            </div>
-          </li>
-        </ul>
       </div>
     </div>
+
   </div>
 </div>

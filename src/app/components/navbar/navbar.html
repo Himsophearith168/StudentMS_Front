@@ -1,17 +1,47 @@
 <nav class="navbar navbar-expand-lg px-4 py-3">
   <div class="container-fluid px-0">
+    <!-- Brand Section -->
     <div class="d-flex align-items-center gap-3">
-      <a class="navbar-brand fw-bold" routerLink="/dashboard">StudentMS</a>
-      <span class="badge rounded-pill bg-primary text-white py-2 px-3 d-none d-lg-inline">Smart admin</span>
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" routerLink="/dashboard">
+        <div class="brand-icon">
+          <i class="bi bi-mortarboard-fill"></i>
+        </div>
+        StudentMS
+      </a>
+      <span class="badge badge-pill-custom d-none d-lg-inline">Smart admin</span>
     </div>
 
-    <div class="d-flex align-items-center gap-2 ms-auto">
-      <div class="input-group search-input shadow-sm rounded-pill overflow-hidden border border-1 border-gray-200 d-none d-md-flex">
-        <span class="input-group-text bg-white border-0">🔎</span>
+    <!-- Right Side Actions -->
+    <div class="d-flex align-items-center gap-3 ms-auto">
+      
+      <!-- Search Bar -->
+      <div class="input-group search-input d-none d-md-flex">
+        <span class="input-group-text bg-transparent border-0">
+          <i class="bi bi-search text-muted-search"></i>
+        </span>
         <input class="form-control border-0" type="search" placeholder="Search students, classes..." aria-label="Search">
+        <span class="input-group-text bg-transparent border-0 shortcut-hint d-none d-lg-flex">
+          ⌘K
+        </span>
       </div>
-      <button class="btn btn-outline-secondary btn-soft px-3 py-2" type="button">Notifications</button>
-      <button class="btn btn-outline-secondary btn-soft px-3 py-2" type="button">Profile</button>
+
+      <!-- Notifications Button -->
+      <button class="btn btn-icon-nav position-relative" type="button" aria-label="Notifications">
+        <i class="bi bi-bell"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill notification-dot border border-dark">
+          3
+        </span>
+      </button>
+
+      <!-- Profile / Avatar Button -->
+      <button class="btn btn-profile-nav d-flex align-items-center gap-2" type="button">
+        <div class="avatar-wrapper">
+          <span class="avatar-text">A</span>
+        </div>
+        <span class="d-none d-lg-inline fw-medium text-light-custom">Admin</span>
+        <i class="bi bi-chevron-down d-none d-lg-inline text-muted-small"></i>
+      </button>
+      
     </div>
   </div>
 </nav>
