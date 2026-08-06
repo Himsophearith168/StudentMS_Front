@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { StatCard } from '../stat-card/stat-card';
 import { StudentService } from '../../services/student-service';
 import { ClassService } from '../../services/class-service';
+import { SubjectService } from '../../services/subject-service';
+import { PermissionService } from '../../services/permission-service';
 
 type BadgeType = 'primary' | 'success' | 'warning' | 'info' | 'secondary';
 
@@ -32,6 +34,8 @@ export class Dashboard implements OnInit {
   constructor(
     private studentService: StudentService,
     private classService: ClassService,
+    private subjectService: SubjectService,
+    private permissionService: PermissionService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -61,6 +65,36 @@ export class Dashboard implements OnInit {
       this.cdr.detectChanges();
     } catch (error) {
       console.error('Failed to load class count:', error);
+    }
+
+    try {
+      const subjects = await this.subjectService.getSubjects();
+      console.log('Dashboard loaded subjects:', subjects);
+      const subjectCount = Array.isArray(subjects) ? subjects.length : 0;
+      this.stats = [
+        this.stats[0],
+        this.stats[1],
+        { ...this.stats[2], value: `${subjectCount}` },
+        ...this.stats.slice(3),
+      ];
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Failed to load subject count:', error);
+    }
+
+    try {
+      const permissions = await this.permissionService.getPermissions();
+      console.log('Dashboard loaded permissions:', permissions);
+      const permissionCount = Array.isArray(permissions) ? permissions.length : 0;
+      this.stats = [
+        this.stats[0],
+        this.stats[1],
+        this.stats[2],
+        { ...this.stats[3], value: `${permissionCount}` },
+      ];
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error('Failed to load permission count:', error);
     }
   }
 }
