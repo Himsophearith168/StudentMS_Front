@@ -10,7 +10,7 @@
 .dashboard-page {
   min-height: 100%;
   position: relative;
-  overflow: hidden; /* Contain ambient blobs */
+  overflow: visible; /* Allow fixed modals to overlay dashboard content */
 }
 
 /* --- Ambient Background Blobs --- */

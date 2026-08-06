@@ -3,9 +3,10 @@ import { AddDataModal } from '../add-data-modal/add-data-modal';
 
 @Component({
   selector: 'app-student',
+  standalone: true,
   imports: [AddDataModal],
   templateUrl: './student.html',
-  styleUrl: './student.css',
+  styleUrls: ['./student.css'],
 })
 export class Student {
   showAdd = false;

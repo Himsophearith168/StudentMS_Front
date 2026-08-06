@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1050;
+  z-index: 9999;
   
   /* Animation initial state */
   opacity: 0;
@@ -19,6 +19,8 @@
 
 /* --- Dialog Card --- */
 .modal-dialog {
+  position: relative;
+  z-index: 10000;
   width: 480px;
   max-width: 90vw;
   background: #ffffff;

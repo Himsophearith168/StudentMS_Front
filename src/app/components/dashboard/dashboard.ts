@@ -5,6 +5,7 @@ import { StudentService } from '../../services/student-service';
 import { ClassService } from '../../services/class-service';
 import { SubjectService } from '../../services/subject-service';
 import { PermissionService } from '../../services/permission-service';
+import { AddDataModal, ModalField } from '../add-data-modal/add-data-modal';
 
 type BadgeType = 'primary' | 'success' | 'warning' | 'info' | 'secondary';
 
@@ -19,7 +20,7 @@ interface StatItem {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, StatCard],
+  imports: [CommonModule, StatCard,AddDataModal],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css'],
 })
@@ -30,14 +31,6 @@ export class Dashboard implements OnInit {
     { title: 'Subjects', value: '24', badgeText: 'Updated', badgeType: 'warning', description: 'Available courses this semester.' },
     { title: 'Ask Permission', value: '98%', badgeText: '+2.4%', badgeType: 'info', description: 'Average permission requests today.' },
   ];
-
-  constructor(
-    private studentService: StudentService,
-    private classService: ClassService,
-    private subjectService: SubjectService,
-    private permissionService: PermissionService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   async ngOnInit() {
     try {
@@ -97,5 +90,63 @@ export class Dashboard implements OnInit {
       console.error('Failed to load permission count:', error);
     }
   }
+
+  showAddDataModal = false;
+  modalEntity = 'Student';
+  modalFields: ModalField[] = [];
+
+  private fieldSchemas: Record<string, ModalField[]> = {
+    Student: [
+      { key: 'name', label: 'Student Name', type: 'text', placeholder: 'Enter student name', required: true },
+      { key: 'code', label: 'Student Code', type: 'text', placeholder: 'Optional student code' },
+      { key: 'email', label: 'Email', type: 'email', placeholder: 'Enter student email' },
+      { key: 'enrolledDate', label: 'Enrollment Date', type: 'date', placeholder: 'Select enrollment date' },
+    ],
+    Subject: [
+      { key: 'name', label: 'Subject Name', type: 'text', placeholder: 'Enter subject name', required: true },
+      { key: 'code', label: 'Subject Code', type: 'text', placeholder: 'Optional subject code' },
+      { key: 'category', label: 'Category', type: 'select', placeholder: 'Choose category', options: [
+        { value: 'science', label: 'Science' },
+        { value: 'math', label: 'Math' },
+        { value: 'language', label: 'Language' },
+      ] },
+    ],
+    Class: [
+      { key: 'name', label: 'Class Name', type: 'text', placeholder: 'Enter class name', required: true },
+      { key: 'code', label: 'Class Code', type: 'text', placeholder: 'Optional class code' },
+      { key: 'room', label: 'Room', type: 'text', placeholder: 'Enter room number' },
+      { key: 'startDate', label: 'Start Date', type: 'date', placeholder: 'Select start date' },
+    ],
+  };
+
+  constructor(
+    private studentService: StudentService,
+    private classService: ClassService,
+    private subjectService: SubjectService,
+    private permissionService: PermissionService,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.setModalFields('Student');
+  }
+
+  setModalFields(entity: string) {
+    this.modalEntity = entity;
+    this.modalFields = this.fieldSchemas[entity] || this.fieldSchemas['Student'];
+  }
+
+  openAddDataModal(entity: string) {
+    this.setModalFields(entity);
+    this.showAddDataModal = true;
+  }
+
+  onCloseAddDataModal() {
+    this.showAddDataModal = false;
+  }
+
+  onSaveAddData(payload: any) {
+    console.log('Save payload:', payload);
+    this.showAddDataModal = false;
+  }
+
 }
 

@@ -17,20 +17,70 @@
     </div>
 
     <div class="modal-body">
-      <div class="mb-4">
-        <label class="form-label fw-semibold text-dark">Name <span class="text-danger">*</span></label>
-        <input class="form-control custom-input" [(ngModel)]="form.name" placeholder="Enter name" />
-      </div>
+      <ng-container *ngFor="let field of fields">
+        <div class="mb-4" *ngIf="field.type !== 'textarea'">
+          <label class="form-label fw-semibold text-dark">
+            {{ field.label }}
+            <span class="text-danger" *ngIf="field.required">*</span>
+          </label>
+          <ng-container [ngSwitch]="field.type">
+            <input
+              *ngSwitchCase="'text'"
+              class="form-control custom-input"
+              [(ngModel)]="form[field.key]"
+              [placeholder]="field.placeholder || ''"
+              type="text"
+            />
+            <input
+              *ngSwitchCase="'number'"
+              class="form-control custom-input"
+              [(ngModel)]="form[field.key]"
+              [placeholder]="field.placeholder || ''"
+              type="number"
+            />
+            <input
+              *ngSwitchCase="'email'"
+              class="form-control custom-input"
+              [(ngModel)]="form[field.key]"
+              [placeholder]="field.placeholder || ''"
+              type="email"
+            />
+            <input
+              *ngSwitchCase="'date'"
+              class="form-control custom-input"
+              [(ngModel)]="form[field.key]"
+              [placeholder]="field.placeholder || ''"
+              type="date"
+            />
+            <select
+              *ngSwitchCase="'select'"
+              class="form-select custom-input"
+              [(ngModel)]="form[field.key]"
+            >
+              <option value="" disabled>{{ field.placeholder || 'Select an option' }}</option>
+              <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
+            </select>
+          </ng-container>
+        </div>
 
-      <div class="mb-2">
-        <label class="form-label fw-semibold text-dark">Code</label>
-        <input class="form-control custom-input" [(ngModel)]="form.code" placeholder="Optional code" />
-      </div>
+        <div class="mb-4" *ngIf="field.type === 'textarea'">
+          <label class="form-label fw-semibold text-dark">
+            {{ field.label }}
+            <span class="text-danger" *ngIf="field.required">*</span>
+          </label>
+          <textarea
+            class="form-control custom-input"
+            [(ngModel)]="form[field.key]"
+            [placeholder]="field.placeholder || ''"
+            rows="4"
+          ></textarea>
+        </div>
+      </ng-container>
     </div>
 
     <div class="modal-footer">
       <button class="btn btn-cancel" (click)="onClose()">Cancel</button>
-      <button class="btn btn-save" (click)="onSave()" [disabled]="!form.name">
+      <button class="btn btn-save" (click)="onSave()" [disabled]="isSaveDisabled">
         <i class="bi bi-check-lg me-1"></i> Save {{ entity }}
       </button>
     </div>
