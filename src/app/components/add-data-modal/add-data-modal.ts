@@ -21,10 +21,15 @@ export interface ModalField {
 export class AddDataModal implements OnChanges {
   @Input() entity = 'Item';
   @Input() visible = false;
+  /** Mode: 'create' | 'edit' | 'view' */
+  @Input() mode: 'create' | 'edit' | 'view' = 'create';
   @Input() fields: ModalField[] = [
     { key: 'name', label: 'Name', type: 'text', placeholder: 'Enter name', required: true },
     { key: 'code', label: 'Code', type: 'text', placeholder: 'Optional code' },
   ];
+
+  /** Optional initial values to prefill the form (used for edit/view) */
+  @Input() initialData: Record<string, any> | null = null;
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
@@ -36,8 +41,19 @@ export class AddDataModal implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['fields'] || (changes['visible'] && changes['visible'].currentValue)) {
+    if (changes['fields']) {
       this.resetForm();
+    }
+
+    if (changes['visible'] && changes['visible'].currentValue) {
+      // when modal becomes visible, reset then apply any provided initial data
+      this.resetForm();
+      if (this.initialData) {
+        this.applyInitialData(this.initialData);
+      }
+    }
+    if (changes['initialData'] && this.visible && this.initialData) {
+      this.applyInitialData(this.initialData);
     }
   }
 
@@ -45,6 +61,12 @@ export class AddDataModal implements OnChanges {
     this.form = {};
     this.fields.forEach((field) => {
       this.form[field.key] = '';
+    });
+  }
+
+  private applyInitialData(data: Record<string, any>) {
+    this.fields.forEach((field) => {
+      if (data[field.key] !== undefined) this.form[field.key] = data[field.key];
     });
   }
 

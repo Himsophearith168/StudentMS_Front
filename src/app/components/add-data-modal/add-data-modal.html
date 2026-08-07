@@ -7,9 +7,13 @@
     <div class="modal-header">
       <div class="d-flex align-items-center gap-3">
         <div class="modal-icon-wrapper">
-          <i class="bi bi-plus-lg"></i>
+          <i [ngClass]="{ 'bi-plus-lg': mode==='create', 'bi-pencil-square': mode==='edit', 'bi-eye-fill': mode==='view' }" class="bi"></i>
         </div>
-        <h5 class="modal-title mb-0">Add New {{ entity }}</h5>
+        <h5 class="modal-title mb-0">
+          <span *ngIf="mode === 'create'">Add New {{ entity }}</span>
+          <span *ngIf="mode === 'edit'">Edit {{ entity }}</span>
+          <span *ngIf="mode === 'view'">View {{ entity }}</span>
+        </h5>
       </div>
       <button type="button" class="btn-close-custom" aria-label="Close" (click)="onClose()">
         <i class="bi bi-x-lg"></i>
@@ -17,7 +21,7 @@
     </div>
 
     <div class="modal-body">
-      <ng-container *ngFor="let field of fields">
+          <ng-container *ngFor="let field of fields">
         <div class="mb-4" *ngIf="field.type !== 'textarea'">
           <label class="form-label fw-semibold text-dark">
             {{ field.label }}
@@ -29,6 +33,7 @@
               class="form-control custom-input"
               [(ngModel)]="form[field.key]"
               [placeholder]="field.placeholder || ''"
+              [disabled]="mode === 'view'"
               type="text"
             />
             <input
@@ -36,6 +41,7 @@
               class="form-control custom-input"
               [(ngModel)]="form[field.key]"
               [placeholder]="field.placeholder || ''"
+              [disabled]="mode === 'view'"
               type="number"
             />
             <input
@@ -43,6 +49,7 @@
               class="form-control custom-input"
               [(ngModel)]="form[field.key]"
               [placeholder]="field.placeholder || ''"
+              [disabled]="mode === 'view'"
               type="email"
             />
             <input
@@ -50,12 +57,14 @@
               class="form-control custom-input"
               [(ngModel)]="form[field.key]"
               [placeholder]="field.placeholder || ''"
+              [disabled]="mode === 'view'"
               type="date"
             />
             <select
               *ngSwitchCase="'select'"
               class="form-select custom-input"
               [(ngModel)]="form[field.key]"
+              [disabled]="mode === 'view'"
             >
               <option value="" disabled>{{ field.placeholder || 'Select an option' }}</option>
               <option *ngFor="let option of field.options" [value]="option.value">{{ option.label }}</option>
@@ -72,6 +81,7 @@
             class="form-control custom-input"
             [(ngModel)]="form[field.key]"
             [placeholder]="field.placeholder || ''"
+            [disabled]="mode === 'view'"
             rows="4"
           ></textarea>
         </div>
@@ -79,8 +89,10 @@
     </div>
 
     <div class="modal-footer">
-      <button class="btn btn-cancel" (click)="onClose()">Cancel</button>
-      <button class="btn btn-save" (click)="onSave()" [disabled]="isSaveDisabled">
+      <button class="btn btn-cancel" type="button" (click)="onClose()">
+        <i class="bi bi-x-lg me-1" aria-hidden="true"></i>Cancel
+      </button>
+      <button *ngIf="mode !== 'view'" class="btn btn-save" (click)="onSave()" [disabled]="isSaveDisabled">
         <i class="bi bi-check-lg me-1"></i> Save {{ entity }}
       </button>
     </div>

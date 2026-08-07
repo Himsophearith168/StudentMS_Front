@@ -4,22 +4,27 @@
 			<h3>Students</h3>
 			<p>Manage student records and enrolment information.</p>
 		</div>
-		<button class="btn btn-primary" (click)="onOpenAdd()"><i class="bi bi-plus-lg"></i>Add Student</button>
+    <button class="btn btn-primary" (click)="onOpenAdd()"><i class="bi bi-person-plus-fill me-2"></i>Add Student</button>
 	</div>
 
 	<app-base-table
-		[title]="'All students'"
-		[columns]="columns"
-		[rows]="students"
-		[showRowNumber]="true"
-		emptyMessage="No student records found.">
-	</app-base-table>
+  [columns]="studentColumns"
+  [rows]="students"
+  [title]="'All Students'"
+  [showRowNumber]="true"
+  [showActions]="true"
+  (onView)="handleView($event)"
+  (onUpdate)="handleUpdate($event)"
+  (onDelete)="handleDelete($event)"
+></app-base-table>
 </section>
 
 <app-add-data-modal
   entity="Student"
   [visible]="showAdd"
   [fields]="studentFields"
+  [initialData]="modalInitial"
+  [mode]="modalMode"
   (close)="onCloseAdd()"
   (save)="onSaveItem($event)">
 </app-add-data-modal>

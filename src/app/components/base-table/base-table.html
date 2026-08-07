@@ -1,7 +1,12 @@
 <section class="base-table-card">
   <header *ngIf="title" class="base-table-header">
-    <h2>{{ title }}</h2>
-    <span class="row-count">{{ rows.length }} records</span>
+    <div class="d-flex align-items-center gap-2">
+      <div class="header-icon">
+        <i class="bi bi-table"></i>
+      </div>
+      <h2>{{ title }}</h2>
+    </div>
+    <span class="row-count"><i class="bi bi-database me-1"></i>{{ rows.length }} records</span>
   </header>
 
   <div class="base-table-scroll">
@@ -12,18 +17,53 @@
           <th *ngFor="let column of columns" [style.width]="column.width" [style.text-align]="column.align || 'left'">
             {{ column.label }}
           </th>
+          <!-- Actions Column Header -->
+          <th *ngIf="showActions" class="actions-column">Actions</th>
         </tr>
       </thead>
       <tbody>
+        <!-- Loading State -->
         <tr *ngIf="loading">
-          <td class="table-state" [attr.colspan]="columns.length + (showRowNumber ? 1 : 0)">Loading records…</td>
+          <td class="table-state" [attr.colspan]="totalColumns">
+            <div class="spinner-wrapper">
+              <div class="custom-spinner"></div>
+              <span>Loading records…</span>
+            </div>
+          </td>
         </tr>
-        <tr *ngFor="let row of rows; let index = index">
+        
+        <!-- Data Rows -->
+        <tr *ngFor="let row of rows; let index = index" class="data-row">
           <td *ngIf="showRowNumber" class="number-column">{{ index + 1 }}</td>
           <td *ngFor="let column of columns" [style.text-align]="column.align || 'left'">{{ valueFor(row, column.key) }}</td>
+          
+          <!-- Action Buttons -->
+          <td *ngIf="showActions" class="actions-column">
+            <div class="action-btn-group">
+              <button class="btn-action btn-view" (click)="onView.emit({row, index})" (keydown.enter)="onView.emit({row, index})" (keydown.space)="onView.emit({row, index})" tabindex="0" aria-label="View details" title="View Details">
+                <i class="fa-regular fa-eye" aria-hidden="true"></i>
+              </button>
+              <button class="btn-action btn-update" (click)="onUpdate.emit({row, index})" title="Update Record">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+              <button class="btn-action btn-update" (click)="onUpdate.emit({row, index})" (keydown.enter)="onUpdate.emit({row, index})" (keydown.space)="onUpdate.emit({row, index})" tabindex="0" aria-label="Edit record" title="Update Record">
+                <i class="fa-regular fa-square-plus"></i>
+              </button>
+              <button class="btn-action btn-delete" (click)="onDelete.emit({row, index})" (keydown.enter)="onDelete.emit({row, index})" (keydown.space)="onDelete.emit({row, index})" tabindex="0" aria-label="Delete record" title="Delete Record">
+                <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
+              </button>
+            </div>
+          </td>
         </tr>
+
+        <!-- Empty State -->
         <tr *ngIf="!loading && rows.length === 0">
-          <td class="table-state" [attr.colspan]="columns.length + (showRowNumber ? 1 : 0)">{{ emptyMessage }}</td>
+          <td class="table-state" [attr.colspan]="totalColumns">
+            <div class="empty-state">
+              <i class="bi bi-inbox"></i>
+              <span>{{ emptyMessage }}</span>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>

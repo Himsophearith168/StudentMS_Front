@@ -26,6 +26,8 @@ export class Student implements OnInit {
   };
 
   studentFields: ModalField[] = this.fieldSchemas['Student'];
+  modalInitial: Record<string, any> | null = null;
+  modalMode: 'create' | 'edit' | 'view' = 'create';
 
   readonly columns: TableColumn[] = [
     { key: 'studentCode', label: 'Student ID', width: '130px' },
@@ -36,6 +38,8 @@ export class Student implements OnInit {
     { key: 'email', label: 'Email' },
     { key: 'status', label: 'Status', width: '105px', align: 'center' },
   ];
+
+  studentColumns = this.columns;
 
   constructor(private studentService: StudentService, private cdr: ChangeDetectorRef) {}
 
@@ -58,11 +62,14 @@ export class Student implements OnInit {
   }
 
   onOpenAdd() {
+    this.modalInitial = null;
+    this.modalMode = 'create';
     this.showAdd = true;
   }
 
   onCloseAdd() {
     this.showAdd = false;
+    this.modalInitial = null;
   }
 
   async onSaveItem(payload: StudentRecord) {
@@ -81,6 +88,40 @@ export class Student implements OnInit {
       phone: student.phone,
       email: student.email,
       status: student.status || 'Active',
+      _raw: student,
     };
+  }
+
+  handleView(event: { row: Record<string, unknown>; index: number }) {
+    console.log('Viewing row:', event.index, 'Data:', event.row);
+    const raw = (event.row as any)._raw;
+    this.modalInitial = raw as Record<string, any>;
+    this.modalMode = 'view';
+    this.showAdd = true;
+  }
+
+  handleUpdate(event: { row: Record<string, unknown>; index: number }) {
+    console.log('Updating row:', event.index, 'Data:', event.row);
+    const raw = (event.row as any)._raw || {};
+    this.modalEntity = 'Student';
+    this.studentFields = this.fieldSchemas['Student'];
+    // set initial data for modal and open it
+    this.modalInitial = raw as Record<string, any>;
+    this.modalMode = 'edit';
+    this.showAdd = true;
+  }
+
+  async handleDelete(event: { row: Record<string, unknown>; index: number }) {
+    console.log('Deleting row:', event.index, 'Data:', event.row);
+    const raw = (event.row as any)._raw;
+    const id = raw?.id;
+    if (!confirm('Are you sure you want to delete this student?')) return;
+    try {
+      if (id !== undefined) await this.studentService.deleteStudent(id);
+      this.students.splice(event.index, 1);
+      this.cdr.detectChanges();
+    } catch (err) {
+      console.error('Failed to delete student:', err);
+    }
   }
 }
