@@ -7,9 +7,14 @@
 		<button class="btn btn-primary" (click)="onOpenAdd()"><i class="bi bi-plus-lg"></i>Add Student</button>
 	</div>
 
-	<div class="student-content-card">
-		<p class="mb-0 text-muted">Student records will appear here.</p>
-	</div>
+	<app-base-table
+		[title]="'All students'"
+		[columns]="columns"
+		[rows]="students"
+		[loading]="loading"
+		[showRowNumber]="true"
+		emptyMessage="No student records found.">
+	</app-base-table>
 </section>
 
 <app-add-data-modal

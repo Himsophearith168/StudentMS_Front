@@ -16,8 +16,6 @@
 .student-page-header p { margin: .35rem 0 0; color: #7b8492; font-size: .9rem; }
 .student-page-header .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .65rem 1rem; border-radius: .45rem; }
 
-.student-content-card { width: 100%; min-height: 180px; padding: 1.5rem; background: #fff; border: 1px solid #edf0f4; border-radius: .55rem; }
-
 @media (max-width: 640px) {
   .student-page { padding: 1.25rem 1rem; }
   .student-page-header { align-items: flex-start; flex-direction: column; }
