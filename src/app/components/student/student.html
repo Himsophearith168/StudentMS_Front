@@ -11,15 +11,15 @@
 		[title]="'All students'"
 		[columns]="columns"
 		[rows]="students"
-		[loading]="loading"
 		[showRowNumber]="true"
 		emptyMessage="No student records found.">
 	</app-base-table>
 </section>
 
 <app-add-data-modal
-	[entity]="'Student'"
-	[visible]="showAdd"
-	(close)="onCloseAdd()"
-	(save)="onSaveItem($event)">
+  entity="Student"
+  [visible]="showAdd"
+  [fields]="studentFields"
+  (close)="onCloseAdd()"
+  (save)="onSaveItem($event)">
 </app-add-data-modal>

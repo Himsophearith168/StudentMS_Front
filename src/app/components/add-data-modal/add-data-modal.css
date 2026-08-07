@@ -27,6 +27,7 @@
   border-radius: 1.5rem; /* Softer, larger radius */
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
+  max-height: calc(100vh - 2rem);
   
   /* Animation initial state */
   transform: scale(0.95) translateY(10px);
@@ -87,6 +88,7 @@
 /* --- Body --- */
 .modal-body { 
   padding: 1.25rem 1.5rem; 
+  overflow-y: auto;
 }
 
 .form-label {

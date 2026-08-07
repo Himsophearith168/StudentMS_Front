@@ -97,10 +97,12 @@ export class Dashboard implements OnInit {
 
   private fieldSchemas: Record<string, ModalField[]> = {
     Student: [
-      { key: 'name', label: 'Student Name', type: 'text', placeholder: 'Enter student name', required: true },
-      { key: 'code', label: 'Student Code', type: 'text', placeholder: 'Optional student code' },
+      { key: 'studentCode', label: 'Student ID', type: 'text', placeholder: 'e.g. STU-001', required: true },
+      { key: 'fullName', label: 'Full Name', type: 'text', placeholder: 'Enter student name', required: true },
+      { key: 'gender', label: 'Gender', type: 'select', placeholder: 'Select gender', options: [{ value: 'Male', label: 'Male' }, { value: 'Female', label: 'Female' }, { value: 'Other', label: 'Other' }] },
       { key: 'email', label: 'Email', type: 'email', placeholder: 'Enter student email' },
-      { key: 'enrolledDate', label: 'Enrollment Date', type: 'date', placeholder: 'Select enrollment date' },
+      { key: 'phone', label: 'Phone Number', type: 'text', placeholder: 'Enter phone number' },
+      { key: 'dob', label: 'Date of Birth', type: 'date' },
     ],
     Subject: [
       { key: 'name', label: 'Subject Name', type: 'text', placeholder: 'Enter subject name', required: true },
@@ -143,8 +145,14 @@ export class Dashboard implements OnInit {
     this.showAddDataModal = false;
   }
 
-  onSaveAddData(payload: any) {
-    console.log('Save payload:', payload);
+  async onSaveAddData(payload: any) {
+    const { entity, ...data } = payload;
+    if (entity === 'Student') {
+      await this.studentService.createStudent(data);
+      const students = await this.studentService.getStudents();
+      this.stats = [{ ...this.stats[0], value: `${students.length}` }, ...this.stats.slice(1)];
+      this.cdr.detectChanges();
+    }
     this.showAddDataModal = false;
   }
 
