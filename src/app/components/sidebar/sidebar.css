@@ -1,105 +1,46 @@
-/* --- Base Sidebar --- */
+:host { display: block; height: 100%; }
+
 .sidebar-menu {
-  color: #e2e8f0;
-  background: #0B1120; /* Matches Navbar background exactly */
-}
-
-/* --- Section Headings --- */
-.sidebar-heading {
-  padding-left: 1rem;
-  color: #475569; /* Muted dark grey instead of bright grey */
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 1px;
-}
-
-/* --- Navigation Links --- */
-.sidebar-link {
-  color: rgba(226, 232, 240, 0.7);
-  padding: 0.85rem 1rem;
-  border-radius: 0.85rem;
-  font-weight: 500;
-  font-size: 0.95rem;
+  min-height: 100%;
   display: flex;
-  align-items: center;
-  border-left: 3px solid transparent; /* Setup for active indicator */
-  transition: all 0.2s ease;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  color: #a6acb8;
+  background: #192133;
 }
 
-.link-icon {
-  font-size: 1.2rem;
-  margin-right: 0.85rem;
-  width: 24px;
-  text-align: center;
-  transition: color 0.2s ease;
-}
+.sidebar-brand { display: flex; align-items: center; gap: .65rem; min-height: 114px; padding: 1.8rem 2.2rem 1.25rem; color: #fff; }
+.brand-mark { display: grid; place-items: center; width: 1.35rem; height: 1.35rem; font-size: 1.22rem; }
+.brand-name { display: block; font-size: 1.28rem; font-weight: 700; letter-spacing: .025em; line-height: 1.1; }
+.brand-caption { display: block; margin-top: .46rem; color: #979eac; font-size: .68rem; font-weight: 500; white-space: nowrap; }
 
-/* Hover State */
-.sidebar-link:hover {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
-  border-left-color: rgba(255, 255, 255, 0.2);
-}
+.sidebar-collapse-row { display: flex; align-items: center; gap: 1.1rem; padding: 0 2.1rem; }
+.sidebar-collapse-row::before { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.1); }
+.collapse-button { display: inline-flex; align-items: center; gap: .6rem; padding: .7rem 0; border: 0; background: transparent; color: #9ba2b1; font-size: .72rem; }
+.collapse-button:hover { color: #fff; }
 
-/* Active State - Teal Accent */
-.sidebar-link.active {
-  color: #ffffff;
-  background: rgba(13, 115, 119, 0.15); /* Teal tint */
-  border-left-color: #14B8A6; /* Solid Teal indicator */
-}
+.sidebar-section { margin-top: 1.45rem; }
+.sidebar-heading { margin: 0 0 .55rem; padding: 0 2rem; color: #a4aab7; font-size: .67rem; font-weight: 700; letter-spacing: -.015em; }
+.sidebar-nav { gap: .15rem; }
 
-.sidebar-link.active .link-icon {
-  color: #14B8A6; /* Icon turns teal */
-}
+.sidebar-link { position: relative; display: flex; align-items: center; gap: 1.05rem; min-height: 58px; padding: .85rem 2rem; color: #adb2be; font-size: .95rem; font-weight: 500; border-radius: 0; transition: color .18s ease, background .18s ease; }
+.link-icon { width: 1.3rem; font-size: 1.28rem; text-align: center; color: #a0a6b3; }
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,.045); }
+.sidebar-link:hover .link-icon { color: #fff; }
+.sidebar-link.active { color: #fff; background: radial-gradient(circle at 84% 50%, rgba(215,220,235,.32), rgba(81,89,107,.45) 31%, rgba(69,77,95,.78) 65%, rgba(62,70,89,.9)); font-weight: 600; box-shadow: none; }
+.sidebar-link.active .link-icon { color: #fff; }
+.menu-badge { display: grid; place-items: center; width: 1.55rem; height: 1.55rem; margin-left: auto; border-radius: 50%; background: #d83d84; color: #fff; font-size: .7rem; font-weight: 700; }
 
-/* --- Bottom Buttons --- */
-.btn-report-btn {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #cbd5e1;
-  border-radius: 0.85rem;
-  padding: 0.75rem 1rem;
-  font-weight: 500;
-  font-size: 0.9rem;
-  text-align: left;
-  transition: all 0.2s ease;
-}
-.btn-report-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.15);
-}
-.btn-report-btn i {
-  color: #64748b;
-  transition: color 0.2s ease;
-}
-.btn-report-btn:hover i {
-  color: #14B8A6; /* Icon turns teal on hover */
-}
+.support-section { margin-top: auto; padding-bottom: 1.55rem; }
+.support-section .sidebar-heading { margin-bottom: .55rem; }
+.logout-link { margin-top: 4.8rem; }
 
-/* --- Divider --- */
-.sidebar-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
-}
-
-/* --- Logout Button --- */
-.btn-logout-btn {
-  background: rgba(220, 38, 38, 0.08); /* Subtle red tint */
-  border: 1px solid rgba(220, 38, 38, 0.15);
-  color: #fca5a5; /* Soft red text */
-  border-radius: 0.85rem;
-  padding: 0.75rem 1rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-align: left;
-  transition: all 0.2s ease;
-}
-.btn-logout-btn:hover {
-  background: rgba(220, 38, 38, 0.15);
-  border-color: rgba(220, 38, 38, 0.3);
-  color: #ffffff;
-}
-.btn-logout-btn i {
-  color: #ef4444;
+@media (max-width: 991px) {
+  .sidebar-menu { min-height: auto; }
+  .sidebar-brand { min-height: auto; padding: 1.25rem 1.5rem; }
+  .sidebar-section { margin-top: 1rem; }
+  .sidebar-heading, .sidebar-link { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .support-section { margin-top: 1rem; }
+  .logout-link { margin-top: 1rem; }
 }

@@ -1,10 +1,16 @@
-<div class="d-flex align-items-center justify-content-between mb-3">
-	<h3>Students</h3>
-	<button class="btn btn-primary" (click)="onOpenAdd()">Add Student</button>
-</div>
+<section class="student-page">
+	<div class="student-page-header">
+		<div>
+			<h3>Students</h3>
+			<p>Manage student records and enrolment information.</p>
+		</div>
+		<button class="btn btn-primary" (click)="onOpenAdd()"><i class="bi bi-plus-lg"></i>Add Student</button>
+	</div>
 
-<!-- Example list placeholder -->
-<p>student works!</p>
+	<div class="student-content-card">
+		<p class="mb-0 text-muted">Student records will appear here.</p>
+	</div>
+</section>
 
 <app-add-data-modal
 	[entity]="'Student'"

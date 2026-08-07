@@ -1,0 +1,31 @@
+<section class="base-table-card">
+  <header *ngIf="title" class="base-table-header">
+    <h2>{{ title }}</h2>
+    <span class="row-count">{{ rows.length }} records</span>
+  </header>
+
+  <div class="base-table-scroll">
+    <table class="base-table">
+      <thead>
+        <tr>
+          <th *ngIf="showRowNumber" class="number-column">#</th>
+          <th *ngFor="let column of columns" [style.width]="column.width" [style.text-align]="column.align || 'left'">
+            {{ column.label }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="loading">
+          <td class="table-state" [attr.colspan]="columns.length + (showRowNumber ? 1 : 0)">Loading records…</td>
+        </tr>
+        <tr *ngFor="let row of rows; let index = index">
+          <td *ngIf="showRowNumber" class="number-column">{{ index + 1 }}</td>
+          <td *ngFor="let column of columns" [style.text-align]="column.align || 'left'">{{ valueFor(row, column.key) }}</td>
+        </tr>
+        <tr *ngIf="!loading && rows.length === 0">
+          <td class="table-state" [attr.colspan]="columns.length + (showRowNumber ? 1 : 0)">{{ emptyMessage }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

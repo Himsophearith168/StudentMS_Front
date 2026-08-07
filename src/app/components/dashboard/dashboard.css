@@ -13,26 +13,6 @@
   overflow: visible; /* Allow fixed modals to overlay dashboard content */
 }
 
-/* --- Ambient Background Blobs --- */
-.ambient-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  z-index: 0;
-  pointer-events: none;
-}
-.blob-1 {
-  width: 600px; height: 600px;
-  background: rgba(13, 115, 119, 0.08);
-  top: -200px; right: -150px;
-}
-.blob-2 {
-  width: 500px; height: 500px;
-  background: rgba(217, 119, 6, 0.06);
-  bottom: -150px; left: -100px;
-}
-.z-1 { position: relative; z-index: 1; }
-
 /* --- Animations --- */
 .fade-in-up {
   opacity: 0;
@@ -48,7 +28,21 @@
   border-radius: 1.2rem; 
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card-custom-radius { border-radius: 1.5rem !important; }
+/* --- School performance chart --- */
+.performance-chart { padding: 1.1rem 1.1rem .55rem; margin-bottom: 1.5rem; background: #f8fafb; border: 1px solid #edf1f3; border-radius: 1rem; }
+.chart-summary { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; padding: 0 .35rem; }
+.chart-label { display: block; margin-bottom: .15rem; color: #718096; font-size: .72rem; font-weight: 600; }
+.chart-summary strong { color: #1e293b; font-size: 1.35rem; line-height: 1; }
+.chart-change { margin-left: .55rem; color: #059669; font-size: .72rem; font-weight: 700; }
+.chart-legend { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .8rem; color: #718096; font-size: .72rem; }
+.chart-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+.legend-dot { width: .5rem; height: .5rem; border-radius: 50%; }
+.attendance-dot { background: #0d7377; }.satisfaction-dot { background: #667eea; }
+.chart-svg { display: block; width: 100%; height: 190px; margin-top: .7rem; overflow: visible; }
+.chart-grid line { stroke: #e5eaee; stroke-width: 1; }.chart-values text, .chart-days text { fill: #94a3b8; font-size: 11px; font-family: Inter, system-ui, sans-serif; }.chart-days text { text-anchor: middle; }
+.attendance-area { fill: url(#attendanceFill); }.attendance-line, .satisfaction-line { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }.attendance-line { stroke: #0d7377; }.satisfaction-line { stroke: #667eea; stroke-width: 2.5; stroke-dasharray: 5 5; }
+.chart-points circle { fill: #fff; stroke-width: 2.5; }.attendance-points circle { stroke: #0d7377; }.satisfaction-points circle { stroke: #667eea; }
+@media (max-width: 575px) { .chart-summary { flex-direction: column; }.chart-legend { justify-content: flex-start; }.chart-svg { height: 155px; }.chart-change { display: block; margin: .4rem 0 0; } }
 
 .card-welcome {
   background: #ffffff;

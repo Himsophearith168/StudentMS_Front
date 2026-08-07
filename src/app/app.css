@@ -15,13 +15,11 @@ app-root,
 html,
 body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: radial-gradient(circle at top left, rgba(13, 110, 253, 0.18), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(32, 201, 151, 0.14), transparent 30%),
-    #f4f7fc;
+  background: #F8FAFD;
 }
 
 body {
-  color: #212529;
+  color: #0F172A;
 }
 
 app-root {
@@ -30,8 +28,7 @@ app-root {
 }
 
 .app-wrapper {
-  display: flex;
-  flex-direction: column;
+  display: block;
   overflow: hidden;
 }
 
@@ -41,37 +38,40 @@ app-root {
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: #0f172a;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 #app-layout {
   display: flex;
   flex-direction: row;
-  flex: 1;
   width: 100%;
-  min-height: calc(100vh - 72px);
+  height: 100%;
+  min-height: 100vh;
+  gap: 0;
+  padding: 0;
 }
 
 .app-sidebar {
-  width: 280px;
-  min-width: 240px;
-  max-width: 320px;
+  width: 249px;
+  min-width: 249px;
+  max-width: 249px;
   position: sticky;
-  top: 72px;
-  height: calc(100vh - 72px);
+  top: 0;
+  height: 100vh;
+  min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
-  background: linear-gradient(180deg, #0f172a 0%, #111827 100%);
-  color: #e2e8f0;
-  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.04);
+  padding: 0;
+  background: #181f31;
 }
 
+.app-workspace { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; height: 100vh; background: #f5f7fb; }
 main.app-main {
   flex: 1 1 auto;
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  height: auto;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
@@ -84,12 +84,12 @@ main.app-main {
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
-  padding: 1.75rem 1.5rem;
+  padding: 0;
 }
 
 .card {
   border: none;
-  border-radius: 1rem;
+  border-radius: 1.25rem;
   box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
 }
 
@@ -104,6 +104,22 @@ main.app-main {
 .progress {
   height: 0.5rem;
   border-radius: 999px;
+}
+
+@media (max-width: 991px) {
+  #app-layout {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .app-sidebar {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    position: relative;
+    top: 0;
+    height: auto;
+  }
 }
 
 @media (max-width: 991px) {
