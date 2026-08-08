@@ -6,6 +6,7 @@ import { Subject } from './components/subject/subject';
 import { Permission } from './components/permission/permission';
 import { Attendance } from './components/attendance/attendance';
 import { ClassManagement } from './components/class-management/class-management';
+import { Schedule } from './components/schedule/schedule';
 
 
 
@@ -18,6 +19,7 @@ export const routes: Routes = [
   { path: 'permissions', component: Permission },
   { path: 'attendance', component: Attendance },
   { path: 'classes', component: ClassManagement },
+  {path:'schedule',component:Schedule},
   { path: '**', redirectTo: 'dashboard' },
 
 
