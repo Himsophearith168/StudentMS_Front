@@ -1,1 +1,58 @@
-<p>permission works!</p>
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="mb-1 fw-bold">Permissions & Leave</h3>
+      <p class="text-muted mb-0">Review and manage student leave requests.</p>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && permissions.length === 0" class="alert alert-info border-0 rounded-4 shadow-sm">
+    No permission requests found.
+  </div>
+
+  <div *ngIf="!loading && permissions.length > 0" class="card shadow-sm border-0 bg-white overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-uppercase small text-muted">
+          <tr>
+            <th class="ps-4">No</th>
+            <th>Student Name</th>
+            <th>Reason</th>
+            <th>Date Requested</th>
+            <th>Status</th>
+            <th class="text-end pe-4">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let perm of permissions; let i = index">
+            <td class="ps-4 text-muted">{{ i + 1 }}</td>
+            <td class="fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-info text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.85rem;">
+                  {{ (perm.studentName || 'S')[0] }}
+                </div>
+                <span>{{ perm.studentName || perm['name'] || 'Unknown' }}</span>
+              </div>
+            </td>
+            <td>{{ perm.reason || perm['type'] || 'N/A' }}</td>
+            <td class="text-muted">{{ perm.startDate || perm.createdAt || perm['date'] || 'N/A' }}</td>
+            <td>
+              <!-- <span class="badge rounded-pill px-3 py-2" [ngClass]="getStatusClass(perm.status || perm['status'])">{{ perm.status || perm['status'] || 'Pending' }}</span> -->
+            </td>
+            <td class="text-end pe-4">
+              <button class="btn btn-sm btn-success rounded-pill px-3 me-2" *ngIf="(perm.status || perm['status']) === 'Pending' || (perm.status || perm['status']) === 'PENDING'">Approve</button>
+              <button class="btn btn-sm btn-outline-danger rounded-pill px-3" *ngIf="(perm.status || perm['status']) === 'Pending' || (perm.status || perm['status']) === 'PENDING'">Reject</button>
+              <span *ngIf="(perm.status || perm['status']) !== 'Pending' && (perm.status || perm['status']) !== 'PENDING'" class="text-muted small">Reviewed</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

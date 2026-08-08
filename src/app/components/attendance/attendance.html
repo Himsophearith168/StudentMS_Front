@@ -1,1 +1,67 @@
-<p>attendance works!</p>
+<div class="container-fluid py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="mb-1 fw-bold">Attendance</h3>
+      <p class="text-muted mb-0">Track daily student attendance.</p>
+    </div>
+    <div class="d-flex gap-3">
+      <input type="date" class="form-control rounded-pill shadow-sm" [(ngModel)]="selectedDate">
+      <button class="btn btn-primary btn-soft px-4 rounded-pill shadow-sm">Save</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && students.length === 0" class="alert alert-info border-0 rounded-4 shadow-sm">
+    No attendance records found.
+  </div>
+
+  <div *ngIf="!loading && students.length > 0" class="card shadow-sm border-0 bg-white overflow-hidden">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light text-uppercase small text-muted">
+          <tr>
+            <th class="ps-4">No</th>
+            <th>Student Name</th>
+            <th>Status</th>
+            <th class="text-end pe-4">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students; let i = index">
+            <td class="ps-4 text-muted">{{ i + 1 }}</td>
+            <td class="fw-bold">
+              <div class="d-flex align-items-center gap-2">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px; font-size: 0.85rem;">
+                  {{ (student.studentName || student['name'] || 'S')[0] }}
+                </div>
+                <span>{{ student.studentName || student['name'] || 'Unnamed' }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="badge rounded-pill px-3 py-2" 
+                    [ngClass]="{
+                      'bg-success bg-opacity-10 text-success border border-success': student.status === 'Present',
+                      'bg-danger bg-opacity-10 text-danger border border-danger': student.status === 'Absent',
+                      'bg-warning bg-opacity-10 text-warning border border-warning': student.status === 'Late'
+                    }">
+                {{ student.status || 'Pending' }}
+              </span>
+            </td>
+            <td class="text-end pe-4">
+              <div class="btn-group shadow-sm rounded-pill" role="group">
+                <button type="button" class="btn btn-sm" [ngClass]="student.status === 'Present' ? 'btn-success' : 'btn-outline-success'" (click)="markStatus(student, 'Present')">Present</button>
+                <button type="button" class="btn btn-sm" [ngClass]="student.status === 'Absent' ? 'btn-danger' : 'btn-outline-danger'" (click)="markStatus(student, 'Absent')">Absent</button>
+                <button type="button" class="btn btn-sm" [ngClass]="student.status === 'Late' ? 'btn-warning' : 'btn-outline-warning'" (click)="markStatus(student, 'Late')">Late</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
