@@ -28,7 +28,10 @@ export class AddDataModal implements OnChanges {
     { key: 'code', label: 'Code', type: 'text', placeholder: 'Optional code' },
   ];
 
-  /** Optional initial values to prefill the form (used for edit/view) */
+  @Input() iconClass: string | null = null;
+  @Input() iconSrc: string | null = null;
+  @Input() iconAlt = '';
+
   @Input() initialData: Record<string, any> | null = null;
 
   @Output() close = new EventEmitter<void>();
@@ -46,7 +49,6 @@ export class AddDataModal implements OnChanges {
     }
 
     if (changes['visible'] && changes['visible'].currentValue) {
-      // when modal becomes visible, reset then apply any provided initial data
       this.resetForm();
       if (this.initialData) {
         this.applyInitialData(this.initialData);

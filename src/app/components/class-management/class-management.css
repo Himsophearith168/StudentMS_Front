@@ -1,0 +1,22 @@
+.class-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 2rem 3rem;
+}
+
+.class-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.class-page-header h3 { margin: 0; color: #20283a; font-size: 1.35rem; font-weight: 700; }
+.class-page-header p { margin: .35rem 0 0; color: #7b8492; font-size: .9rem; }
+.class-page-header .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .65rem 1rem; border-radius: .45rem; }
+
+@media (max-width: 640px) {
+  .class-page { padding: 1.25rem 1rem; }
+  .class-page-header { align-items: flex-start; flex-direction: column; }
+}

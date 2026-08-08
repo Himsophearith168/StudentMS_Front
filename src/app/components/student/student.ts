@@ -28,6 +28,7 @@ export class Student implements OnInit {
   studentFields: ModalField[] = this.fieldSchemas['Student'];
   modalInitial: Record<string, any> | null = null;
   modalMode: 'create' | 'edit' | 'view' = 'create';
+  modalIconClass: 'fa-regular fa-eye' | 'fa-regular fa-pen-to-square' | 'fa-regular fa-square-plus' | 'fa-regular fa-trash-can' = 'fa-regular fa-square-plus';
 
   readonly columns: TableColumn[] = [
     { key: 'studentCode', label: 'Student ID', width: '130px' },
@@ -64,6 +65,7 @@ export class Student implements OnInit {
   onOpenAdd() {
     this.modalInitial = null;
     this.modalMode = 'create';
+    this.modalIconClass = 'fa-regular fa-square-plus';
     this.showAdd = true;
   }
 
@@ -97,6 +99,7 @@ export class Student implements OnInit {
     const raw = (event.row as any)._raw;
     this.modalInitial = raw as Record<string, any>;
     this.modalMode = 'view';
+    this.modalIconClass = 'fa-regular fa-eye';
     this.showAdd = true;
   }
 
@@ -108,6 +111,7 @@ export class Student implements OnInit {
     // set initial data for modal and open it
     this.modalInitial = raw as Record<string, any>;
     this.modalMode = 'edit';
+    this.modalIconClass = 'fa-regular fa-pen-to-square';
     this.showAdd = true;
   }
 

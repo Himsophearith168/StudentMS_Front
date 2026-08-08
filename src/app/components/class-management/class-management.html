@@ -1,1 +1,31 @@
-<p>class-management works!</p>
+<section class="class-page">
+	<div class="class-page-header">
+		<div>
+			<h3>Class Management</h3>
+			<p>Manage class records and information.</p>
+		</div>
+    <button class="btn btn-primary" (click)="onOpenAdd()"><i class="fa-solid fa-user-graduate"></i>Add Class</button>
+	</div>
+
+	<app-base-table
+  [columns]="classColumns"
+  [rows]="classes"
+  [title]="'All Classes'"
+  [showRowNumber]="true"
+  [showActions]="true"
+  (onView)="handleView($event)"
+  (onUpdate)="handleUpdate($event)"
+  (onDelete)="handleDelete($event)"
+></app-base-table>
+</section>
+
+<app-add-data-modal
+  entity="Class"
+  [visible]="showAdd"
+  [fields]="classFields"
+  [initialData]="modalInitial"
+  [mode]="modalMode"
+  [iconClass]="modalIconClass"
+  (close)="onCloseAdd()"
+  (save)="onSaveItem($event)">
+</app-add-data-modal>

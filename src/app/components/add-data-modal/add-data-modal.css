@@ -60,6 +60,13 @@
   font-size: 1.1rem;
 }
 
+.modal-icon-img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  display: block;
+}
+
 .modal-title {
   font-weight: 700;
   color: #1a1a1a;

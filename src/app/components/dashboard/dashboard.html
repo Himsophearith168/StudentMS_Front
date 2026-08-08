@@ -18,12 +18,12 @@
               <button class="btn btn-outline-success px-4 py-2" (click)="openAddDataModal('Student')">
                 <i class="bi bi-plus-lg me-2"></i>Add Student
               </button>
-              <button class="btn btn-outline-primary px-4 py-2" (click)="openAddDataModal('Class')">
+              <!-- <button class="btn btn-outline-primary px-4 py-2" (click)="openAddDataModal('Class')">
                 <i class="bi bi-building me-2"></i>Add Class
               </button>
               <button class="btn btn-outline-secondary px-4 py-2" (click)="openAddDataModal('Subject')">
                 <i class="bi bi-book me-2"></i>Add Subject
-              </button>
+              </button> -->
             </div>
           </div>
         </div>
@@ -195,6 +195,7 @@
     [entity]="modalEntity"
     [visible]="showAddDataModal"
     [fields]="modalFields"
+    [iconClass]="'fa-solid fa-user-graduate'"
     (close)="onCloseAddDataModal()"
     (save)="onSaveAddData($event)"
   >

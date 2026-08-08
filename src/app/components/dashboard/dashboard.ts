@@ -104,21 +104,21 @@ export class Dashboard implements OnInit {
       { key: 'phone', label: 'Phone Number', type: 'text', placeholder: 'Enter phone number' },
       { key: 'dob', label: 'Date of Birth', type: 'date' },
     ],
-    Subject: [
-      { key: 'name', label: 'Subject Name', type: 'text', placeholder: 'Enter subject name', required: true },
-      { key: 'code', label: 'Subject Code', type: 'text', placeholder: 'Optional subject code' },
-      { key: 'category', label: 'Category', type: 'select', placeholder: 'Choose category', options: [
-        { value: 'science', label: 'Science' },
-        { value: 'math', label: 'Math' },
-        { value: 'language', label: 'Language' },
-      ] },
-    ],
-    Class: [
-      { key: 'name', label: 'Class Name', type: 'text', placeholder: 'Enter class name', required: true },
-      { key: 'code', label: 'Class Code', type: 'text', placeholder: 'Optional class code' },
-      { key: 'room', label: 'Room', type: 'text', placeholder: 'Enter room number' },
-      { key: 'startDate', label: 'Start Date', type: 'date', placeholder: 'Select start date' },
-    ],
+    // Subject: [
+    //   { key: 'name', label: 'Subject Name', type: 'text', placeholder: 'Enter subject name', required: true },
+    //   { key: 'code', label: 'Subject Code', type: 'text', placeholder: 'Optional subject code' },
+    //   { key: 'category', label: 'Category', type: 'select', placeholder: 'Choose category', options: [
+    //     { value: 'science', label: 'Science' },
+    //     { value: 'math', label: 'Math' },
+    //     { value: 'language', label: 'Language' },
+    //   ] },
+    // ],
+    // Class: [
+    //   { key: 'name', label: 'Class Name', type: 'text', placeholder: 'Enter class name', required: true },
+    //   { key: 'code', label: 'Class Code', type: 'text', placeholder: 'Optional class code' },
+    //   { key: 'room', label: 'Room', type: 'text', placeholder: 'Enter room number' },
+    //   { key: 'startDate', label: 'Start Date', type: 'date', placeholder: 'Select start date' },
+    // ],
   };
 
   constructor(
