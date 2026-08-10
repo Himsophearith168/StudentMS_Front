@@ -106,16 +106,27 @@ export class Student implements OnInit {
 
   async onSaveItem(payload: StudentRecord) {
     try {
-      const normalizedPayload = this.normalizePayload(payload);
-      if (this.modalMode === 'edit' && normalizedPayload.id !== undefined) {
-        await this.studentService.updateStudent(normalizedPayload.id, normalizedPayload);
+      const isEditMode = this.modalMode === 'edit';
+      const normalizedPayload = this.normalizePayload(payload, isEditMode);
+      const studentId = normalizedPayload.id;
+      console.log('[Student Component] Saving with mode:', this.modalMode, 'ID:', studentId, 'Payload:', normalizedPayload);
+      
+      const shouldUpdate = isEditMode && studentId !== undefined && studentId !== null;
+      console.log('[Student Component] Should update:', shouldUpdate);
+      
+      if (shouldUpdate) {
+        await this.studentService.updateStudent(studentId as string | number, normalizedPayload);
+        alert('Student updated successfully');
       } else {
         await this.studentService.createStudent(normalizedPayload);
+        alert('Student created successfully');
       }
       this.showAdd = false;
       await this.loadStudents();
     } catch (err) {
       console.error('Failed to save student:', err);
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      alert('Failed to save student: ' + errorMsg);
     }
   }
 
@@ -149,7 +160,6 @@ export class Student implements OnInit {
     const raw = (event.row as any)._raw || {};
     this.modalEntity = 'Student';
     this.studentFields = this.fieldSchemas['Student'];
-    // set initial data for modal and open it
     this.modalInitial = this.buildModalInitial(raw as StudentRecord);
     this.modalMode = 'edit';
     this.modalIconClass = 'fa-regular fa-pen-to-square';
@@ -192,30 +202,50 @@ export class Student implements OnInit {
     } as Record<string, any>;
   }
 
-  private normalizePayload(payload: StudentRecord): StudentRecord {
-    const normalized = { ...payload } as StudentRecord;
+  private normalizePayload(payload: StudentRecord, isUpdate: boolean = false): StudentRecord {
+    const normalized: Record<string, any> = {};
 
-    if (normalized.classId !== undefined && normalized.classId !== null && normalized.classId !== '') {
-      const classIdValue = String(normalized.classId).trim();
-      normalized.classId = classIdValue ? Number(classIdValue) : undefined;
+    // Always include id if present
+    if (payload.id !== undefined && payload.id !== null) {
+      normalized['id'] = payload.id;
     }
 
-    if (typeof normalized.subjectIds === 'string') {
-      const subjectText = normalized.subjectIds as string;
+    // Include other expected fields
+    const otherFields = ['studentCode', 'username', 'password', 'fullName', 'gender', 'dob', 'phone', 'email', 'address', 'status', 'classId', 'subjectIds'];
+    
+    otherFields.forEach((field) => {
+      if (payload[field] !== undefined && payload[field] !== null && payload[field] !== '') {
+        normalized[field] = payload[field];
+      }
+    });
+
+    // For updates, remove empty password (don't require it)
+    if (isUpdate && (!normalized['password'] || normalized['password'] === '')) {
+      delete normalized['password'];
+    }
+
+    // Normalize classId to number
+    if (normalized['classId'] !== undefined) {
+      const classIdValue = String(normalized['classId']).trim();
+      normalized['classId'] = classIdValue ? Number(classIdValue) : undefined;
+      if (normalized['classId'] === undefined) delete normalized['classId'];
+    }
+
+    // Normalize subjectIds to array of numbers
+    if (typeof normalized['subjectIds'] === 'string') {
+      const subjectText = normalized['subjectIds'] as string;
       const subjectValues = subjectText
         .split(',')
         .map((value: string) => value.trim())
         .filter((value: string) => Boolean(value));
 
-      normalized.subjectIds = subjectValues.map((value: string) => Number(value));
-    } else if (Array.isArray(normalized.subjectIds)) {
-      normalized.subjectIds = normalized.subjectIds.map((value: any) => Number(value));
+      normalized['subjectIds'] = subjectValues.map((value: string) => Number(value));
+    } else if (Array.isArray(normalized['subjectIds'])) {
+      normalized['subjectIds'] = normalized['subjectIds'].map((value: any) => Number(value));
+    } else if (normalized['subjectIds'] !== undefined) {
+      delete normalized['subjectIds'];
     }
 
-    if (normalized.password === '') {
-      delete normalized.password;
-    }
-
-    return normalized;
+    return normalized as StudentRecord;
   }
 }

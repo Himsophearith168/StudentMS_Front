@@ -25,6 +25,7 @@ export class ApiService {
     ];
 
     let lastError: any = null;
+    let lastErrorResponse: any = null;
 
     for (const url of urlsToTry) {
       try {
@@ -34,6 +35,9 @@ export class ApiService {
         });
 
         if (!response.ok) {
+          const text = await response.text();
+          console.warn(`[ApiService] ${options.method || 'GET'} ${url} returned ${response.status}:`, text);
+          lastErrorResponse = { status: response.status, statusText: response.statusText, body: text };
           continue;
         }
 
@@ -44,11 +48,15 @@ export class ApiService {
           return JSON.parse(trimmed) as T;
         }
       } catch (e) {
+        console.warn(`[ApiService] ${options.method || 'GET'} ${url} failed:`, e);
         lastError = e;
       }
     }
 
     console.warn(`[ApiService] Could not fetch ${path} from candidate URLs.`);
+    if (lastErrorResponse) {
+      throw new Error(`API Error ${lastErrorResponse.status}: ${lastErrorResponse.statusText} - ${lastErrorResponse.body}`);
+    }
     throw lastError || new Error(`Failed to fetch ${path}`);
   }
 

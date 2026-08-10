@@ -43,11 +43,8 @@
               <button class="btn-action btn-view" (click)="onView.emit({row, index})" (keydown.enter)="onView.emit({row, index})" (keydown.space)="onView.emit({row, index})" tabindex="0" aria-label="View details" title="View Details">
                 <i class="fa-regular fa-eye" aria-hidden="true"></i>
               </button>
-              <button class="btn-action btn-update" (click)="onUpdate.emit({row, index})" title="Update Record">
+              <button class="btn-action btn-update" (click)="onUpdate.emit({row, index})" (keydown.enter)="onUpdate.emit({row, index})" (keydown.space)="onUpdate.emit({row, index})" tabindex="0" aria-label="Edit record" title="Edit Record">
                 <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-              <button class="btn-action btn-update" (click)="onUpdate.emit({row, index})" (keydown.enter)="onUpdate.emit({row, index})" (keydown.space)="onUpdate.emit({row, index})" tabindex="0" aria-label="Edit record" title="Update Record">
-                <i class="fa-regular fa-square-plus"></i>
               </button>
               <button class="btn-action btn-delete" (click)="onDelete.emit({row, index})" (keydown.enter)="onDelete.emit({row, index})" (keydown.space)="onDelete.emit({row, index})" tabindex="0" aria-label="Delete record" title="Delete Record">
                 <i class="fa-regular fa-trash-can" aria-hidden="true"></i>
