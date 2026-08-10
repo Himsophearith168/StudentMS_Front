@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 export interface ModalField {
   key: string;
   label: string;
-  type: 'text' | 'number' | 'email' | 'textarea' | 'select' | 'date';
+  type: 'text' | 'number' | 'email' | 'password' | 'textarea' | 'select' | 'date';
   placeholder?: string;
   required?: boolean;
   options?: Array<{ value: string; label: string }>;
@@ -89,7 +89,7 @@ export class AddDataModal implements OnChanges {
   }
 
   onBackdropClick(event: MouseEvent) {
-    if ((event.target as HTMLElement).classList.contains('modal-overlay')) {
+    if (event.target === event.currentTarget) {
       this.onClose();
     }
   }

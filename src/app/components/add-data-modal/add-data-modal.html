@@ -55,6 +55,14 @@
               type="email"
             />
             <input
+              *ngSwitchCase="'password'"
+              class="form-control custom-input"
+              [(ngModel)]="form[field.key]"
+              [placeholder]="field.placeholder || ''"
+              [disabled]="mode === 'view'"
+              type="password"
+            />
+            <input
               *ngSwitchCase="'date'"
               class="form-control custom-input"
               [(ngModel)]="form[field.key]"

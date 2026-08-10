@@ -18,10 +18,38 @@ export class Student implements OnInit {
 
   private fieldSchemas: Record<string, ModalField[]> = {
     Student: [
-      { key: 'name', label: 'Student Name', type: 'text', placeholder: 'Enter student name', required: true },
-      { key: 'code', label: 'Student Code', type: 'text', placeholder: 'Optional student code' },
+      { key: 'studentCode', label: 'Student ID', type: 'text', placeholder: 'e.g. STU-002', required: true },
+      { key: 'username', label: 'Username', type: 'text', placeholder: 'Enter username', required: true },
+      { key: 'password', label: 'Password', type: 'password', placeholder: 'Enter password' },
+      { key: 'fullName', label: 'Full Name', type: 'text', placeholder: 'Enter student name', required: true },
+      {
+        key: 'gender',
+        label: 'Gender',
+        type: 'select',
+        placeholder: 'Select gender',
+        options: [
+          { label: 'Male', value: 'Male' },
+          { label: 'Female', value: 'Female' },
+          { label: 'Other', value: 'Other' }
+        ]
+      },
+      { key: 'dob', label: 'Date of Birth', type: 'date', placeholder: 'Select date of birth' },
+      { key: 'phone', label: 'Phone Number', type: 'text', placeholder: 'Enter phone number' },
       { key: 'email', label: 'Email', type: 'email', placeholder: 'Enter student email' },
-      { key: 'enrolledDate', label: 'Enrollment Date', type: 'date', placeholder: 'Select enrollment date' },
+      { key: 'address', label: 'Address', type: 'textarea', placeholder: 'Enter student address' },
+      { key: 'classId', label: 'Class ID', type: 'number', placeholder: 'e.g. 1' },
+      { key: 'subjectIds', label: 'Subject IDs', type: 'text', placeholder: 'e.g. 1,2,3' },
+      {
+        key: 'status',
+        label: 'Status',
+        type: 'select',
+        placeholder: 'Select status',
+        options: [
+          { label: 'Active', value: 'Active' },
+          { label: 'Inactive', value: 'Inactive' },
+          { label: 'Suspended', value: 'Suspended' }
+        ]
+      }
     ],
   };
 
@@ -63,6 +91,8 @@ export class Student implements OnInit {
   }
 
   onOpenAdd() {
+    this.modalEntity = 'Student';
+    this.studentFields = this.fieldSchemas['Student'];
     this.modalInitial = null;
     this.modalMode = 'create';
     this.modalIconClass = 'fa-regular fa-square-plus';
@@ -75,9 +105,18 @@ export class Student implements OnInit {
   }
 
   async onSaveItem(payload: StudentRecord) {
-    await this.studentService.createStudent(payload);
-    this.showAdd = false;
-    await this.loadStudents();
+    try {
+      const normalizedPayload = this.normalizePayload(payload);
+      if (this.modalMode === 'edit' && normalizedPayload.id !== undefined) {
+        await this.studentService.updateStudent(normalizedPayload.id, normalizedPayload);
+      } else {
+        await this.studentService.createStudent(normalizedPayload);
+      }
+      this.showAdd = false;
+      await this.loadStudents();
+    } catch (err) {
+      console.error('Failed to save student:', err);
+    }
   }
 
   private toTableRow(student: StudentRecord): Record<string, unknown> {
@@ -97,7 +136,9 @@ export class Student implements OnInit {
   handleView(event: { row: Record<string, unknown>; index: number }) {
     console.log('Viewing row:', event.index, 'Data:', event.row);
     const raw = (event.row as any)._raw;
-    this.modalInitial = raw as Record<string, any>;
+    this.modalEntity = 'Student';
+    this.studentFields = this.fieldSchemas['Student'];
+    this.modalInitial = this.buildModalInitial(raw as StudentRecord);
     this.modalMode = 'view';
     this.modalIconClass = 'fa-regular fa-eye';
     this.showAdd = true;
@@ -109,7 +150,7 @@ export class Student implements OnInit {
     this.modalEntity = 'Student';
     this.studentFields = this.fieldSchemas['Student'];
     // set initial data for modal and open it
-    this.modalInitial = raw as Record<string, any>;
+    this.modalInitial = this.buildModalInitial(raw as StudentRecord);
     this.modalMode = 'edit';
     this.modalIconClass = 'fa-regular fa-pen-to-square';
     this.showAdd = true;
@@ -121,11 +162,60 @@ export class Student implements OnInit {
     const id = raw?.id;
     if (!confirm('Are you sure you want to delete this student?')) return;
     try {
-      if (id !== undefined) await this.studentService.deleteStudent(id);
+      if (id !== undefined) {
+        await this.studentService.deleteStudent(id);
+      }
       this.students.splice(event.index, 1);
       this.cdr.detectChanges();
     } catch (err) {
       console.error('Failed to delete student:', err);
     }
+  }
+
+  private buildModalInitial(student: StudentRecord | null): Record<string, any> | null {
+    if (!student) return null;
+
+    const classIdValue = student.classId ?? (typeof student.className === 'object' && student.className !== null ? (student.className as any).id : undefined);
+    const subjectIdsValue = Array.isArray(student.subjectIds)
+      ? student.subjectIds.join(',')
+      : Array.isArray(student.subjects)
+        ? student.subjects
+            .map((subject: any) => (typeof subject === 'string' ? subject : subject?.id ?? subject?.subjectId))
+            .filter(Boolean)
+            .join(',')
+        : '';
+
+    return {
+      ...student,
+      classId: classIdValue,
+      subjectIds: subjectIdsValue,
+    } as Record<string, any>;
+  }
+
+  private normalizePayload(payload: StudentRecord): StudentRecord {
+    const normalized = { ...payload } as StudentRecord;
+
+    if (normalized.classId !== undefined && normalized.classId !== null && normalized.classId !== '') {
+      const classIdValue = String(normalized.classId).trim();
+      normalized.classId = classIdValue ? Number(classIdValue) : undefined;
+    }
+
+    if (typeof normalized.subjectIds === 'string') {
+      const subjectText = normalized.subjectIds as string;
+      const subjectValues = subjectText
+        .split(',')
+        .map((value: string) => value.trim())
+        .filter((value: string) => Boolean(value));
+
+      normalized.subjectIds = subjectValues.map((value: string) => Number(value));
+    } else if (Array.isArray(normalized.subjectIds)) {
+      normalized.subjectIds = normalized.subjectIds.map((value: any) => Number(value));
+    }
+
+    if (normalized.password === '') {
+      delete normalized.password;
+    }
+
+    return normalized;
   }
 }

@@ -26,6 +26,7 @@ export interface Student {
   id?: number | string;
   studentCode: string;
   username?: string;
+  password?: string;
   fullName?: string;
   gender?: string;
   dob?: string | Date;
@@ -33,8 +34,10 @@ export interface Student {
   email?: string;
   address?: string;
   status?: string;
-  className?: StudentClass;
-  subjects?: StudentSubject[];
+  classId?: number | string;
+  subjectIds?: Array<number | string>;
+  className?: StudentClass | string;
+  subjects?: StudentSubject[] | string | Array<string | StudentSubject>;
   createdAt?: string;
   [key: string]: any;
 }

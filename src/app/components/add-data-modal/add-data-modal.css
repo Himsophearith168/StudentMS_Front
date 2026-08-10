@@ -8,6 +8,7 @@
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  pointer-events: auto;
   
   /* Animation initial state */
   opacity: 0;
@@ -28,6 +29,9 @@
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   max-height: calc(100vh - 2rem);
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
   
   /* Animation initial state */
   transform: scale(0.95) translateY(10px);
@@ -96,6 +100,8 @@
 .modal-body { 
   padding: 1.25rem 1.5rem; 
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .form-label {
